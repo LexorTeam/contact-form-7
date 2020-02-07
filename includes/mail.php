@@ -328,6 +328,11 @@ class WPCF7_MailTaggedText {
 				$replaced = $this->format( $replaced, $format );
 			}
 
+			// trungpv
+			if ( $mail_tag->get_option( 'urlencode' ) ) {
+				$replaced = urlencode( $replaced);
+			}
+
 			$replaced = wpcf7_flat_join( $replaced );
 
 			if ( $html ) {
@@ -392,6 +397,8 @@ class WPCF7_MailTag {
 		$this->options = array(
 			'do_not_heat' => false,
 			'format' => '',
+			// trungpv
+			'urlencode' => '',
 		);
 
 		if ( ! empty( $values ) ) {
@@ -407,6 +414,12 @@ class WPCF7_MailTag {
 		if ( preg_match( '/^_format_(.+)$/', $tagname, $matches ) ) {
 			$this->name = trim( $matches[1] );
 			$this->options['format'] = $this->values[0];
+		}
+
+		// trungpv
+		if ( preg_match( '/^_urlencode_(.+)$/', $tagname, $matches ) ) {
+			$this->name = trim( $matches[1] );
+			$this->options['urlencode'] = true;
 		}
 	}
 
